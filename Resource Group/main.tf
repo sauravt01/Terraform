@@ -12,7 +12,7 @@ provider "azurerm" {
   features {
 
   }
-  subscription_id = "2c68ed43-5abc-4e76-a2f4-b6b3f86d6b04"
+  subscription_id = "712bfb2b-0ea5-4e2e-ae12-b849c506ebe4"
 }
 
 
@@ -21,16 +21,5 @@ resource "azurerm_resource_group" "rg123" {
   location = "West US"
 }
 
-
-resource "azurerm_storage_account" "example1" {
-  name = "backendstorageaccount1"
-
-  #Implicit dependencies
-  resource_group_name      = azurerm_resource_group.rg2.name
-  location                 = azurerm_resource_group.rg2.location
-
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
-}
 
 
