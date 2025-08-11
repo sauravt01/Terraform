@@ -28,4 +28,12 @@ steps:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
+    environmentServiceNameAzureRM: 'con' 
+- task: TerraformTask@5
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
     environmentServiceNameAzureRM: 'con'
+    args: '-auto-approve'
