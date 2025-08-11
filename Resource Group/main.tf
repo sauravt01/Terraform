@@ -18,7 +18,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg123" {
   name     = "Saurav_rg123"
-  location = "West US"
+  location = "West US2"
 }
 
 
