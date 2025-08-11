@@ -17,7 +17,7 @@ steps:
     command: 'custom'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
     outputTo: 'console'
-    customCommand: 'init -upgrade'
+    customCommand: 'terraform init -upgrade'
     environmentServiceNameAzureRM: 'con'
 
 # - task: TerraformTask@5
