@@ -20,9 +20,6 @@ resource "azurerm_resource_group" "rg123" {
   name     = "Saurav_rg123"
   location = "West US"
 }
-resource "azurerm_resource_group" "rg1234" {
-  name     = "Saurav_rg1234"
-  location = "West US"
-}
+
 
 
