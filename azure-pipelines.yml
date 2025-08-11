@@ -23,3 +23,8 @@ steps:
     backendAzureRmStorageAccountName: 'strglnp1'
     backendAzureRmContainerName: 'container'
     backendAzureRmKey: 'terr.tfstate'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'con'
