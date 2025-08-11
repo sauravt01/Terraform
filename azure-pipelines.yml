@@ -17,18 +17,18 @@ steps:
     command: 'custom'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
     outputTo: 'console'
-    customCommand: 'terraform init -upgrade'
+    customCommand: 'terraform -upgrade'
     environmentServiceNameAzureRM: 'con'
 
-# - task: TerraformTask@5
-#   inputs:
-#     provider: 'azurerm'
-#     command: 'init'
-#     backendServiceArm: 'con'
-#     backendAzureRmResourceGroupName: 'rg235'
-#     backendAzureRmStorageAccountName: 'strglnp'
-#     backendAzureRmContainerName: 'container'
-#     backendAzureRmKey: 'terraform.tfstate'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'con'
+    backendAzureRmResourceGroupName: 'rg235'
+    backendAzureRmStorageAccountName: 'strglnp'
+    backendAzureRmContainerName: 'container'
+    backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTask@5
   inputs:
