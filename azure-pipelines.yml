@@ -24,4 +24,5 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
     environmentServiceNameAzureRM: 'con'
