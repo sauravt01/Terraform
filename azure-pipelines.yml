@@ -19,12 +19,12 @@ steps:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
     backendServiceArm: 'con'
-    backendAzureRmResourceGroupName: 'rgsidharth'
-    backendAzureRmStorageAccountName: 'strglnp1'
-    backendAzureRmContainerName: 'container'
-    backendAzureRmKey: 'terr.tfstate'
+    backendAzureRmStorageAccountName: 'new56878'
+    backendAzureRmContainerName: 'con686'
+    backendAzureRmKey: 'terr.tfstate' 
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Resource Group'
     environmentServiceNameAzureRM: 'con'
