@@ -17,9 +17,16 @@ provider "azurerm" {
 
 
 resource "azurerm_resource_group" "rg123" {
-  name     = "Saurav_rg12388"
+  name     = "Saurav_rg01"
   location = "West US"
 }
-
+resource "azurerm_storage_account" "st01" {
+  name                     = "sauravstorageaccount01"
+  resource_group_name      = azurerm_resource_group.rg123.name
+  location                 = azurerm_resource_group.rg123.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  
+}
 
 

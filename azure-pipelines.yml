@@ -1,7 +1,6 @@
 trigger:
 - main
 - feature
-
 pool:
   name: default
 
