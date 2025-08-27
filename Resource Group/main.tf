@@ -17,7 +17,7 @@ provider "azurerm" {
 
 
 resource "azurerm_resource_group" "rg123" {
-  name     = "Saurav_rg01"
+  name     = "Saurav_rg099"
   location = "West US"
 }
 resource "azurerm_storage_account" "st01" {
