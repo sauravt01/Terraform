@@ -5,7 +5,7 @@ variables:
    
 steps: 
 - script: |
-   echo "Hello $name"
+   echo "Hello $(name)"
    echo "How are you ?"
    echo "Kha rahte ho tum"
 
