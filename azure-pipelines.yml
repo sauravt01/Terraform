@@ -1,8 +1,11 @@
 pool: Default 
 trigger: none 
+variables: 
+  name: Saurav tripathi
+   
 steps: 
 - script: |
-   echo "Hello saurav Tripathi 
+   echo "Hello $name"
    echo "How are you ?"
    echo "Kha rahte ho tum"
 
