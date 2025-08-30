@@ -1,10 +1,7 @@
 steps: 
-- script: pwd 
-  workingDirectory:
-       C:\Devops
+- script: echo Hello saurav Tripathi How are you !
+  workingDirectory: C:\Devops
 pool: default 
-
-
 trigger: none 
 
 
