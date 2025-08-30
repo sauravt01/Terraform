@@ -1,8 +1,13 @@
-steps: 
-- script: echo Hello saurav Tripathi How are you !
-  workingDirectory: C:\Devops
-pool: default 
+pool: Default 
 trigger: none 
+steps: 
+- script: |
+   echo "Hello saurav Tripathi 
+   echo "How are you ?"
+   echo "Kha rahte ho tum"
+
+  workingDirectory: C:\Devops
+
 
 
 
