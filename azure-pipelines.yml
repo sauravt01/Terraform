@@ -3,10 +3,21 @@ trigger: none
 variables: 
   name: Saurav tripathi
   father_name: xxx
-  
+parameters:
+- name: environment
+  type: string
+  default: dev
+  values:
+  - dev
+  - qa
+  - prod
+
 steps: 
 - script: |
    echo "Hello my name is $(name) and father name is $(father_name)"
+   echo "Deploying to ${{ parameters.environment }}"
+   displayName: "Saurav ka Pipeline"
+
 
 
 
