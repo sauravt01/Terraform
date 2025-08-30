@@ -10,7 +10,7 @@ parameters:
   - dev
   - qa
   - prod
-- name: Which server
+- name: which_server
   type: string
   values:
   - Appache
@@ -22,7 +22,7 @@ parameters:
 steps: 
 - script: |
    echo "Hello my name is $(name) and father name is $(father_name)"
-   echo "Deploying to ${{ parameters.environment }}"
+   echo "Deploying to ${{ parameters.environment }} and on ${{ parameters.which_server }} server "
   displayName: "Saurav ka Pipeline"
 
 
