@@ -2,14 +2,12 @@ pool: Default
 trigger: none 
 variables: 
   name: Saurav tripathi
-   
+  father_name: xxx
+  
 steps: 
 - script: |
-   echo "Hello $(name)"
-   echo "How are you ?"
-   echo "Kha rahte ho tum"
+   echo "Hello my name is $(name) and father name is $(father_name)"
 
-  workingDirectory: C:\Devops
 
 
 
