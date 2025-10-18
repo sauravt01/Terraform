@@ -7,3 +7,9 @@ variable "rg" {
         tags = map(string)
     }))
 }
+
+module "resource_group" {
+  
+  source = "../../Azure_Resource_group"
+rg =var.rg
+ }
