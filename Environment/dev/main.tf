@@ -1,4 +1,4 @@
-variable "rg" {
+variable "rgs" {
 
     type =map(object({
       name = string
@@ -11,5 +11,5 @@ variable "rg" {
 module "resource_group" {
   
   source = "../../Azure_Resource_group"
-rg =var.rg
+   rg =var.rgs
  }

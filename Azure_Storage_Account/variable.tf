@@ -21,7 +21,7 @@ variable "storage_accounts" {
   nfsv3_enabled                      = optional(bool)
   large_file_share_enabled           = optional(bool)
   local_user_enabled                 = optional(bool)
-  queue_encryption_key_type          = Optional(string)
+  queue_encryption_key_type          = optional(string)
   table_encryption_key_type          = optional(string)
   infrastructure_encryption_enabled  = optional(bool)
   allowed_copy_scope                 = optional(string)
