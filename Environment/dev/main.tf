@@ -1,15 +1,58 @@
-variable "rgs" {
 
-    type =map(object({
-      name = string
-        location = string
-        managed_by = string
-        tags = map(string)
-    }))
-}
 
 module "resource_group" {
-  
-  source = "../../Azure_Resource_group"
-   rg =var.rgs
- }
+
+  source = "../../Module/Azure_Resource_group"
+  rgs    = var.rgs
+}
+
+module "vnet" {
+  depends_on = [module.resource_group]
+  source     = "../../Module/Azure_Vnet"
+  vnets      = var.vnets
+}
+
+#nsg module
+module "nsg" {
+  depends_on = [module.resource_group]
+  source     = "../../Module/azurerm_network_security_group"
+  nsgs       = var.nsgs
+}
+module "vm" {
+  depends_on = [module.vnet, module.resource_group, module.nsg]
+  source     = "C:/Devops/Infra-demo/BBS-Demo-10/Module/Azure_Virtual_Machine"
+  vms        = var.vms
+}
+# }
+
+# # key vault module
+# module "key_vault" {
+
+#   # depends_on = [module.resource_group]
+#   source     = "../../Module/azurerm_key_vault"
+#   keys_vault = var.keys_vault
+
+# }
+# # key vault secret module
+# module "key_vault_secret" {
+
+#   depends_on = [module.key_vault]
+#   source     = "../../Module/azurerm_key_vault_secret"
+#   secrets    = var.secrets
+
+# }
+
+
+# # module "sql_server" 
+# module "sql_server" {
+#   depends_on = [module.key_vault, module.key_vault_secret]
+#   source     = "../../Module/azuerm_mssql_server"
+#   servers = var.servers
+# }
+
+
+module "arsv" {
+  source = "../../Module/azurerm_ars"
+  vaults    = var.vaults
+}
+
