@@ -1,6 +1,3 @@
-
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: 'mkdir Bondoo7'
+steps:
+  - powershell: mkdir Bond
  
