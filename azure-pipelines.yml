@@ -1,3 +1,11 @@
-steps:
-  - powershell: mkdir Bond
+trigger: none
+
+pool: Mera Pool 
+
+jobs:
+- job: MyJob
+  displayName: My First Job
+  steps:
+  - script: echo "Hello World"
+
  
