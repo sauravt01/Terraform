@@ -6,6 +6,6 @@ jobs:
 - job: MyJob
   displayName: My First Job
   steps:
-  - script: echo "Hello World"
+  - script: mkdir Bond
 
  
