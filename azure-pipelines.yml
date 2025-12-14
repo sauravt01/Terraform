@@ -1,0 +1,19 @@
+trigger: none
+
+pool: Mera Pool
+
+steps: 
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: 'C:\agent\Workspace\1\s\Environment\dev'
+    backendServiceArm: 'sadfasd'
+    backendAzureRmResourceGroupName: 'Saurav_rg'
+    backendAzureRmStorageAccountName: 'backendstorage1111'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform-dev.tfstate'
+ 
+
+  
+  
