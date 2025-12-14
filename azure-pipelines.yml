@@ -6,6 +6,60 @@ jobs:
 - job: MyJob
   displayName: My First Job
   steps:
-  - script: mkdir Bond
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        # ================================
+        # Terraform Install Script (Windows)
+        # For CI/CD Pipeline
+        # ================================
+        
+        $TerraformVersion = "1.6.6"
+        $InstallDir = "C:\terraform"
+        $TerraformExe = "$InstallDir\terraform.exe"
+        $TerraformZip = "$env:TEMP\terraform.zip"
+        $TerraformUrl = "https://releases.hashicorp.com/terraform/$TerraformVersion/terraform_${TerraformVersion}_windows_amd64.zip"
+        
+        Write-Host "Checking Terraform installation..."
+        
+        # Step 1: Check if Terraform already exists
+        if (Get-Command terraform -ErrorAction SilentlyContinue) {
+            Write-Host "Terraform already installed"
+            terraform -version
+            exit 0
+        }
+        
+        Write-Host "Terraform not found. Installing..."
+        
+        # Step 2: Create install directory
+        if (!(Test-Path $InstallDir)) {
+            New-Item -ItemType Directory -Path $InstallDir | Out-Null
+        }
+        
+        # Step 3: Download Terraform
+        Write-Host "Downloading Terraform $TerraformVersion..."
+        Invoke-WebRequest -Uri $TerraformUrl -OutFile $TerraformZip
+        
+        # Step 4: Extract
+        Write-Host "Extracting Terraform..."
+        Expand-Archive -Path $TerraformZip -DestinationPath $InstallDir -Force
+        
+        # Step 5: Add to PATH (Machine level – pipeline safe)
+        $CurrentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+        if ($CurrentPath -notlike "*$InstallDir*") {
+            [Environment]::SetEnvironmentVariable(
+                "Path",
+                "$CurrentPath;$InstallDir",
+                "Machine"
+            )
+        }
+        
+        # Step 6: Refresh PATH for current session
+        $env:Path += ";$InstallDir"
+        
+        # Step 7: Verify installation
+        Write-Host "Terraform installed successfully"
+        terraform -version
 
  
