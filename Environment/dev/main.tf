@@ -51,8 +51,5 @@ module "vnet" {
 # }
 
 
-module "arsv" {
-  source = "../../Module/azurerm_ars"
-  vaults    = var.vaults
-}
+
 
