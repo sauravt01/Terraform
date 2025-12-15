@@ -6,17 +6,44 @@ trigger:
     exclude:
       - feature2/
 
+variables:
+- name: Directory_Name
+  value: $(System.DefaultWorkingDirectory)/Environment/dev
+
 pool: Mera Pool
 
 steps: 
-
   - task: TerraformTask@5
     inputs:
       provider: 'azurerm'
       command: 'init'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/dev'
+      workingDirectory: '$(Directory_Name)'
       backendAzureRmUseEntraIdForAuthentication: false
       backendServiceArm: 'con1'
       backendAzureRmStorageAccountName: 'storageaccount9454'
       backendAzureRmContainerName: 'tfstate'
       backendAzureRmKey: 'terraform-dev-tfstate'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'validate'
+      workingDirectory: '$(Directory_Name)'
+
+  
+
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'plan'
+      workingDirectory: '$(Directory_Name)'
+      environmentServiceNameAzureRM: 'con1'
+
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'apply'
+      workingDirectory: '$(Directory_Name)'
+      commandOptions: '-auto-approve'
+      environmentServiceNameAzureRM: 'con1'
+
+  
