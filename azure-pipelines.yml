@@ -9,7 +9,7 @@ steps:
       provider: 'azurerm'
       command: 'init'
       workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/dev'
-      backendAzureRmUseEntraIdForAuthentication: false
+      backendAzureRmUseEntraIdForAuthentication: true
       backendServiceArm: 'con1'
       backendAzureRmStorageAccountName: 'storageaccount9454'
       backendAzureRmContainerName: 'tfstate'
