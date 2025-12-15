@@ -6,14 +6,14 @@ terraform {
     }
   }
 
-  # backend "azurerm" {
-  #   resource_group_name  = "rg1234"
-  #   storage_account_name = "storageaccount9454"
-  #   container_name       = "tfstate"
-  #   key                  = "terraform-dev-tfstate"
-  # }
+  backend "azurerm" {
+    resource_group_name  = "rg1234"
+    storage_account_name = "storageaccount9454"
+    container_name       = "tfstate"
+    key                  = "terraform-dev-tfstate"
+  }
 
-  backend "local" {}
+  
 }
 
 
