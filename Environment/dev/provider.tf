@@ -12,6 +12,8 @@ terraform {
   #   container_name       = "tfstate"
   #   key                  = "terraform-dev-tfstate"
   # }
+
+  backend "local" {}
 }
 
 
