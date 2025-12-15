@@ -1,4 +1,10 @@
-trigger: none
+trigger:
+  branches: # Branch names to include or exclude for triggering a run.
+    include: 
+      - main
+      - feature1/
+    exclude:
+      - feature2/
 
 pool: Mera Pool
 
