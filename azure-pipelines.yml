@@ -12,38 +12,76 @@ variables:
 
 pool: Mera Pool
 
-steps: 
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      workingDirectory: '$(Directory_Name)'
-      backendAzureRmUseEntraIdForAuthentication: false
-      backendServiceArm: 'con1'
-      backendAzureRmStorageAccountName: 'storageaccount9454'
-      backendAzureRmContainerName: 'tfstate'
-      backendAzureRmKey: 'terraform-dev-tfstate'
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'validate'
-      workingDirectory: '$(Directory_Name)'
 
-  
+stages:
+- stage: Build
+  jobs:
+  - job: 
+    steps: 
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(Directory_Name)'
+          backendAzureRmUseEntraIdForAuthentication: false
+          backendServiceArm: 'con1'
+          backendAzureRmStorageAccountName: 'storageaccount9454'
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: 'terraform-dev-tfstate'
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'validate'
+          workingDirectory: '$(Directory_Name)'
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(Directory_Name)'
+          environmentServiceNameAzureRM: 'con1'
 
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'plan'
-      workingDirectory: '$(Directory_Name)'
-      environmentServiceNameAzureRM: 'con1'
+- stage: Scan
+  jobs:
+    - job: 
+      steps:
+      - task: tfsec@1
+        inputs:
+          version: 'v1.26.0'
+ 
+- stage: Deploy
+  jobs:
+  - job: 
+    displayName: Initialization
+    steps:
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(Directory_Name)'
+          backendAzureRmUseEntraIdForAuthentication: false
+          backendServiceArm: 'con1'
+          backendAzureRmStorageAccountName: 'storageaccount9454'
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: 'terraform-dev-tfstate'
 
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'apply'
-      workingDirectory: '$(Directory_Name)'
-      commandOptions: '-auto-approve'
-      environmentServiceNameAzureRM: 'con1'
+  - job: waitForValidation
+    displayName: Wait for external validation
+    pool: server
+    steps:
+    - task: ManualValidation@1
+      inputs:
+        notifyUsers: 
+          sauravtripathi23@gmail.com,
+        instructions: 'Please validate the build configuration and resume'
 
-  
+  - job: Apply
+    steps:
+      - task: TerraformTask@5
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          workingDirectory: '$(Directory_Name)'
+          commandOptions: '-auto-approve'
+          environmentServiceNameAzureRM: 'con1'
+
+
