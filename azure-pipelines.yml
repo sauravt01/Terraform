@@ -3,14 +3,14 @@ trigger: none
 pool: Mera Pool
 
 steps: 
+
   - task: TerraformTask@5
     inputs:
       provider: 'azurerm'
       command: 'init'
       workingDirectory: '$(System.DefaultWorkingDirectory)/Environment/dev'
+      backendAzureRmUseEntraIdForAuthentication: false
       backendServiceArm: 'con1'
-      backendAzureRmOverrideSubscriptionID: 'acd9510d-7e29-433d-8504-d10d34dba654'
-      backendAzureRmResourceGroupName: 'rg1234'
       backendAzureRmStorageAccountName: 'storageaccount9454'
       backendAzureRmContainerName: 'tfstate'
       backendAzureRmKey: 'terraform-dev-tfstate'
