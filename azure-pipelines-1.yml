@@ -11,11 +11,6 @@ pool: Mera Pool
 
 
 steps:
-- task: TerraformInstaller@1
-  inputs:
-    terraformVersion: '1.4.23.2342'
-
-
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
