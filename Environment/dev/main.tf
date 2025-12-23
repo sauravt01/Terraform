@@ -3,7 +3,7 @@
 module "resource_group" {
 
   source = "../../Module/Azure_Resource_group"
-  rgs    = var.rgs
+  rgs    = var.rg
 }
 # Added new line 
 #Added one more line 
