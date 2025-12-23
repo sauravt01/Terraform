@@ -12,18 +12,18 @@ module "vnet" {
   vnets      = var.vnets
 }
 
-# #nsg module
-# module "nsg" {
-#   depends_on = [module.resource_group]
-#   source     = "../../Module/azurerm_network_security_group"
-#   nsgs       = var.nsgs
-# }
-# module "vm" {
-#   depends_on = [module.vnet, module.resource_group, module.nsg]
-#   source     = "C:/Devops/Infra-demo/BBS-Demo-10/Module/Azure_Virtual_Machine"
-#   vms        = var.vms
-# }
-# }
+#nsg module
+module "nsg" {
+  depends_on = [module.resource_group]
+  source     = "../../Module/azurerm_network_security_group"
+  nsgs       = var.nsgs
+}
+module "vm" {
+  depends_on = [module.vnet, module.resource_group, module.nsg]
+  source     = "../../Module/Azure_Virtual_Machine"
+  vms        = var.vms
+}
+
 
 # # key vault module
 # module "key_vault" {
