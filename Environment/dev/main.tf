@@ -5,7 +5,7 @@ module "resource_group" {
   source = "../../Module/Azure_Resource_group"
   rgs    = var.rgs
 }
-
+# Added new line 
 module "vnet" {
   depends_on = [module.resource_group]
   source     = "../../Module/Azure_Vnet"

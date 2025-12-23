@@ -1,0 +1,56 @@
+trigger:
+  
+  branches: # Branch names to include or exclude for triggering a run.
+    include: 
+      - main
+    exclude: 
+      - feature
+  
+pool: Mera Pool
+
+
+
+steps:
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\dev'
+    backendAzureRmUseEntraIdForAuthentication: false
+    backendServiceArm: 'con2'
+    backendAzureRmResourceGroupName: 'rg1234'
+    backendAzureRmStorageAccountName: 'storageaccount9454'
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform-dev-tfstate'
+
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment\dev'
+    environmentServiceNameAzureRM: 'con2'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment\dev'
+
+
+
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment\dev'
+    environmentServiceNameAzureRM: 'con2'
+
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Environment\dev'
+    environmentServiceNameAzureRM: 'con2'
