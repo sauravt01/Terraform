@@ -1,87 +1,66 @@
+# 1. 
 trigger:
-  branches: # Branch names to include or exclude for triggering a run.
-    include: 
-      - main
-      - feature1/
+  branches:
     exclude:
-      - feature2/
+    - feature/1
+    - feature/2 
+    include:
+     - main
+  # tags:
+  #  exclude:
+  #  include:
+  batch: true 
+  paths:
+   exclude:
+   include:
+     - 
+# 2. 
 
-variables:
-- name: Directory_Name
-  value: $(System.DefaultWorkingDirectory)/Environment/dev
+pool:
+ demands:
+ name: 
+ vmImage: 
 
-pool: Mera Pool
+ #3 parameters:
 
+
+parameters:
+- name: dev # Required as first property.
+  displayName: string # Human-readable name for the parameter.
+  type: string
+  default: string | parameters | [ parameters ] # Default value; if no default, then the parameter MUST be given by the user at runtime.
+  values: [ string ] # Allowed list of values (for some data types).
+
+- name: runTests
+  type: boolean
+  default: true
+
+- name: appName
+  type: string
+  default: myApp
+
+steps:
+- script: echo Deploying ${{ parameters.appName }} to ${{ parameters.environment }}
+
+#4. Variable 
+
+variables:      # pipeline-level
+  MY_VAR: 'my value'
+  ANOTHER_VAR: 'another value'
 
 stages:
 - stage: Build
+  variables:    # stage-level
+    STAGE_VAR: 'that happened'
+
   jobs:
-  - job: 
-    steps: 
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          workingDirectory: '$(Directory_Name)'
-          backendAzureRmUseEntraIdForAuthentication: false
-          backendServiceArm: 'con1'
-          backendAzureRmStorageAccountName: 'storageaccount9454'
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform-dev-tfstate'
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'validate'
-          workingDirectory: '$(Directory_Name)'
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'plan'
-          workingDirectory: '$(Directory_Name)'
-          environmentServiceNameAzureRM: 'con1'
-
-- stage: Scan
-  jobs:
-    - job: 
-      steps:
-      - task: tfsec@1
-        inputs:
-          version: 'v1.26.0'
- 
-- stage: Deploy
-  jobs:
-  - job: 
-    displayName: Initialization
+  - job: FirstJob
+    variables:  # job-level
+      JOB_VAR: 'a job var'
     steps:
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          workingDirectory: '$(Directory_Name)'
-          backendAzureRmUseEntraIdForAuthentication: false
-          backendServiceArm: 'con1'
-          backendAzureRmStorageAccountName: 'storageaccount9454'
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform-dev-tfstate'
+    - script: echo $(MY_VAR) $(STAGE_VAR) $(JOB_VAR)
 
-  - job: waitForValidation
-    displayName: Wait for external validation
-    pool: server
-    steps:
-    - task: ManualValidation@1
-      inputs:
-        notifyUsers: 
-          sauravtripathi23@gmail.com,
-        instructions: 'Please validate the build configuration and resume'
+#5. variable group 
 
-  - job: Apply
-    steps:
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'apply'
-          workingDirectory: '$(Directory_Name)'
-          commandOptions: '-auto-approve'
-          environmentServiceNameAzureRM: 'con1'
-
-
+variables:
+- group: tcs
